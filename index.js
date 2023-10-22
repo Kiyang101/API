@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const Character = require("./models/Character");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 mongoose.set("strictQuery", false);
 const connectDB = async () => {
