@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const Character = require("./models/Character");
 
 const app = express();
-const PORT = process.env.PORT;
+const port = process.env.PORT || 3000
 
 mongoose.set("strictQuery", false);
 const connectDB = async () => {
@@ -86,7 +86,7 @@ app.delete("/:name", async (req, res, next) => {
 
 //Connect to the database before listening
 connectDB().then(() => {
-    app.listen(PORT, () => {
+    app.listen(port, () => {
         console.log("listening for requests");
     })
 })
