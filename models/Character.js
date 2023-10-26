@@ -10,4 +10,4 @@ const CharacterSchema = new mongoose.Schema({
     updated_at: { type: Date, default: Date.now }
 })
 
-module.exports = mongoose.model('Charcter', CharacterSchema)
+module.exports = mongoose.model('Character', CharacterSchema)
