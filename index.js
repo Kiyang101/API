@@ -54,8 +54,7 @@ app.post("/", async (req, res, next) => {
 
 app.post("/addCharacter", async (req, res, next) => {
   try {
-    const newCharacter = await Character.create(req.body);
-    res.json(newCharacter);
+    res.json();
   } catch (err) {
     next(err);
   }
