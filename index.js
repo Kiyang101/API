@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cors = require('cors');
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -6,11 +7,12 @@ const Character = require("./models/Character");
 
 const app = express();
 const port = process.env.PORT || 3000
+app.use(cors());
 
 mongoose.set("strictQuery", false);
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
+    const conn = await mongoose.connect(process.env.MONGO_URI); 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);
@@ -49,6 +51,16 @@ app.post("/", async (req, res, next) => {
     next(err);
   }
 });
+
+app.post("/addCharacter", async (req, res, next) => {
+  try {
+    const newCharacter = await Character.create(req.body);
+    res.json(newCharacter);
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 app.put("/:name", async (req, res, next) => {
   try {
