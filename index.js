@@ -1,18 +1,18 @@
 require("dotenv").config();
-const cors = require('cors');
+const cors = require("cors");
 
 const express = require("express");
 const mongoose = require("mongoose");
 const Character = require("./models/Character");
 
 const app = express();
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 app.use(cors());
 
 mongoose.set("strictQuery", false);
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI); 
+    const conn = await mongoose.connect(process.env.MONGO_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);
@@ -60,7 +60,6 @@ app.post("/addCharacter", async (req, res, next) => {
   }
 });
 
-
 app.put("/:name", async (req, res, next) => {
   try {
     const updatedCharacter = await Character.findOneAndUpdate(
@@ -97,7 +96,7 @@ app.delete("/:name", async (req, res, next) => {
 
 //Connect to the database before listening
 connectDB().then(() => {
-    app.listen(port, () => {
-        console.log("listening for requests");
-    })
-})
+  app.listen(port, () => {
+    console.log("listening for requests");
+  });
+});
