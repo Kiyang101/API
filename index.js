@@ -22,7 +22,7 @@ const connectDB = async () => {
 };
 
 //Routes
-const blockedIPs = ["127.0.0.1"];
+const blockedIPs = [];
 app.use((req, res, next) => {
   if (blockedIPs.includes(req.ip)) {
     res.status(403).send("Access denied!");
