@@ -45,6 +45,9 @@ app.get("/:name", async (req, res, next) => {
 
 app.post("/", async (req, res, next) => {
   try {
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ error: "Request body is empty" });
+    }
     const newCharacter = await Character.create(req.body);
     res.json(newCharacter);
   } catch (err) {
