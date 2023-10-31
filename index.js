@@ -23,13 +23,15 @@ const connectDB = async () => {
 
 //Routes
 const blockedIPs = ["127.0.0.1"];
+app.use((req, res, next) => {
+  if (blockedIPs.includes(req.ip)) {
+    res.status(403).send("Access denied!");
+  } else {
+    next();
+  }
+});
 app.get("/", async (req, res, next) => {
   try {
-    if (blockedIPs.includes(req.ip)) {
-      res.status(403).send("Access denied!");
-    } else {
-      next();
-    }
     console.log("Request from IP:", req.ip);
     console.log("User-Agent:", req.headers["user-agent"]);
     console.log("Referer:", req.headers.referer);
