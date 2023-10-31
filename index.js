@@ -8,6 +8,7 @@ const Character = require("./models/Character");
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(cors());
+app.use(express.json());
 
 mongoose.set("strictQuery", false);
 const connectDB = async () => {
@@ -45,6 +46,7 @@ app.get("/:name", async (req, res, next) => {
 
 app.post("/", async (req, res, next) => {
   try {
+    console.log("Received data : ", req.body);
     if (!req.body || Object.keys(req.body).length === 0) {
       return res.status(400).json({ error: "Request body is empty" });
     }
