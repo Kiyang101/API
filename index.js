@@ -25,6 +25,7 @@ const connectDB = async () => {
 
 app.get("/", async (req, res, next) => {
   try {
+    console.log("Request from IP:", req.ip);
     const characters = await Character.find();
     res.json(characters);
   } catch (err) {
