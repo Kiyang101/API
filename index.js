@@ -26,6 +26,8 @@ const connectDB = async () => {
 app.get("/", async (req, res, next) => {
   try {
     console.log("Request from IP:", req.ip);
+    console.log("User-Agent:", req.headers["user-agent"]);
+    console.log("Referer:", req.headers.referer);
     const characters = await Character.find();
     res.json(characters);
   } catch (err) {
