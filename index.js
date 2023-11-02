@@ -76,44 +76,44 @@ app.post("/", async (req, res, next) => {
 //   }
 // });
 
-app.put("/:name", async (req, res, next) => {
-  try {
-    const updatedCharacter = await Character.findOneAndUpdate(
-      { name: req.params.name },
-      req.body,
-      { new: true }
-    );
-    if (!updatedCharacter) {
-      return res
-        .status(404)
-        .send("No character found with that name to update");
-    }
-    res.json(updatedCharacter);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// app.put("/:id", async (req, res, next) => {
+// app.put("/:name", async (req, res, next) => {
 //   try {
-//     const { id } = req.params.id;
-//     const updateData = req.body;
-
-//     const updatedCharacter = await Character.findByIdAndUpdate(
-//       id,
-//       { $set: updateData },
+//     const updatedCharacter = await Character.findOneAndUpdate(
+//       { name: req.params.name },
+//       req.body,
 //       { new: true }
 //     );
-
 //     if (!updatedCharacter) {
-//       return res.status(404).send("No character found with that ID to update");
+//       return res
+//         .status(404)
+//         .send("No character found with that name to update");
 //     }
-
 //     res.json(updatedCharacter);
 //   } catch (err) {
 //     next(err);
 //   }
 // });
+
+app.put("/:name", async (req, res, next) => {
+  try {
+    const { id } = req.params.name;
+    const updateData = req.body;
+
+    const updatedCharacter = await Character.findByIdAndUpdate(
+      id,
+      { $set: updateData },
+      { new: true }
+    );
+
+    if (!updatedCharacter) {
+      return res.status(404).send("No character found with that ID to update");
+    }
+
+    res.json(updatedCharacter);
+  } catch (err) {
+    next(err);
+  }
+});
 
 app.delete("/:name", async (req, res, next) => {
   try {
