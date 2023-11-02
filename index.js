@@ -30,6 +30,7 @@ app.use((req, res, next) => {
     next();
   }
 });
+
 app.get("/", async (req, res, next) => {
   try {
     console.log("Request from IP:", req.ip);
@@ -67,19 +68,40 @@ app.post("/", async (req, res, next) => {
   }
 });
 
-app.post("/addCharacter", async (req, res, next) => {
-  try {
-    res.json();
-  } catch (err) {
-    next(err);
-  }
-});
+// app.post("/addCharacter", async (req, res, next) => {
+//   try {
+//     res.json();
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 app.put("/:name", async (req, res, next) => {
   try {
     const updatedCharacter = await Character.findOneAndUpdate(
       { name: req.params.name },
       req.body,
+      { new: true }
+    );
+    if (!updatedCharacter) {
+      return res
+        .status(404)
+        .send("No character found with that name to update");
+    }
+    res.json(updatedCharacter);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.put("/update/:name", async (req, res, next) => {
+  try {
+    const { name } = req.params.name;
+    const updateData = req.body;
+
+    const updatedCharacter = await Character.findOneAndUpdate(
+      { name: name },
+      { $set: updateData },
       { new: true }
     );
     if (!updatedCharacter) {
