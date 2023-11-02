@@ -94,21 +94,21 @@ app.post("/", async (req, res, next) => {
 //   }
 // });
 
-app.put("/:name", async (req, res, next) => {
+app.put("/:id", async (req, res, next) => {
   try {
-    const { name } = req.params.name;
+    const { id } = req.params;
     const updateData = req.body;
 
-    const updatedCharacter = await Character.findOneAndUpdate(
-      { name: name },
+    const updatedCharacter = await Character.findByIdAndUpdate(
+      id,
       { $set: updateData },
       { new: true }
     );
+
     if (!updatedCharacter) {
-      return res
-        .status(404)
-        .send("No character found with that name to update");
+      return res.status(404).send("No character found with that ID to update");
     }
+
     res.json(updatedCharacter);
   } catch (err) {
     next(err);
