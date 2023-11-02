@@ -96,7 +96,7 @@ app.post("/", async (req, res, next) => {
 
 app.put("/:id", async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params.id;
     const updateData = req.body;
 
     const updatedCharacter = await Character.findByIdAndUpdate(
