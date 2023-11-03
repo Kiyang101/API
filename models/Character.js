@@ -7,7 +7,7 @@ const CharacterSchema = new mongoose.Schema({
   rarity: Number,
   select: Boolean,
   display: Boolean,
-  // disAnemo: { Boolean, required: false },
+  disAnemo: { Boolean, required: false, unique: true },
   // disCryo: { Boolean, required: false },
   // disDendro: { Boolean, required: false },
   // disElectro: { Boolean, required: false },
