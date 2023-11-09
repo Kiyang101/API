@@ -8,6 +8,7 @@ const CharacterSchema = new mongoose.Schema({
   select: Boolean,
   display: {
     real: Boolean,
+    disSearch: Boolean,
     disFour: { type: Boolean, required: false },
     disFive: { type: Boolean, required: false },
     disAnemo: { type: Boolean, required: false },

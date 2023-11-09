@@ -68,14 +68,6 @@ app.post("/", async (req, res, next) => {
   }
 });
 
-// app.post("/addCharacter", async (req, res, next) => {
-//   try {
-//     res.json();
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
 app.put("/:name", async (req, res, next) => {
   try {
     const updatedCharacter = await Character.findOneAndUpdate(
@@ -93,27 +85,6 @@ app.put("/:name", async (req, res, next) => {
     next(err);
   }
 });
-
-// app.put("/:name", async (req, res, next) => {
-//   try {
-//     const { id } = req.params.name;
-//     const updateData = req.body;
-
-//     const updatedCharacter = await Character.findByIdAndUpdate(
-//       id,
-//       { $set: updateData },
-//       { new: true }
-//     );
-
-//     if (!updatedCharacter) {
-//       return res.status(404).send("No character found with that ID to update");
-//     }
-
-//     res.json(updatedCharacter);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
 
 app.delete("/:name", async (req, res, next) => {
   try {
