@@ -4,7 +4,7 @@ const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const Character = require("./models/Character");
-const Boss = require("/models/Boss")
+const Boss = require("./models/Boss")
 
 const app = express();
 const port = process.env.PORT || 3000;
