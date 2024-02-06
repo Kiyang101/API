@@ -56,6 +56,18 @@ app.get("/:name", async (req, res, next) => {
   }
 });
 
+app.get("/boss/", async (req, res, next) => {
+  try {
+    console.log("Request from IP:", req.ip);
+    console.log("User-Agent:", req.headers["user-agent"]);
+    console.log("Referer:", req.headers.referer);
+    const boss = await Boss.find();
+    res.json(boss);
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.post("/", async (req, res, next) => {
   try {
     console.log("Received data : ", req.body);
@@ -68,6 +80,20 @@ app.post("/", async (req, res, next) => {
     next(err);
   }
 });
+
+app.post("/boss/", async (req, res, next) => {
+  try {
+    console.log("Received data : ", req.body);
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ error: "Request body is empty" });
+    }
+    const newBoss = await Boss.create(req.body);
+    res.json(newBoss);
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 app.put("/:name", async (req, res, next) => {
   try {
