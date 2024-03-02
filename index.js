@@ -44,17 +44,6 @@ app.get("/characters", async (req, res, next) => {
   }
 });
 
-app.get("/:name", async (req, res, next) => {
-  try {
-    const character = await Character.findOne({ name: req.params.name });
-    if (!character) {
-      return res.status(404).send("No character found with that name");
-    }
-    res.json(character);
-  } catch (err) {
-    next(err);
-  }
-});
 
 app.get("/bosses", async (req, res, next) => {
   try {
@@ -63,6 +52,19 @@ app.get("/bosses", async (req, res, next) => {
     console.log("Referer:", req.headers.referer);
     const boss = await Boss.find();
     res.json(boss);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+app.get("/find/:name", async (req, res, next) => {
+  try {
+    const character = await Character.findOne({ name: req.params.name });
+    if (!character) {
+      return res.status(404).send("No character found with that name");
+    }
+    res.json(character);
   } catch (err) {
     next(err);
   }
