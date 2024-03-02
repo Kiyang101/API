@@ -58,7 +58,7 @@ app.get("/bosses", async (req, res, next) => {
 });
 
 
-app.get("/find/:name", async (req, res, next) => {
+app.get("/cfind/:name", async (req, res, next) => {
   try {
     const character = await Character.findOne({ name: req.params.name });
     if (!character) {
@@ -70,7 +70,19 @@ app.get("/find/:name", async (req, res, next) => {
   }
 });
 
-app.post("/", async (req, res, next) => {
+app.get("/bfind/:name", async (req, res, next) => {
+  try {
+    const boss = await Boss.findOne({ name: req.params.name });
+    if (!boss) {
+      return res.status(404).send("No boss found with that name");
+    }
+    res.json(boss);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.post("/cpost", async (req, res, next) => {
   try {
     console.log("Received data : ", req.body);
     if (!req.body || Object.keys(req.body).length === 0) {
@@ -83,21 +95,21 @@ app.post("/", async (req, res, next) => {
   }
 });
 
-// app.post("/boss/", async (req, res, next) => {
-//   try {
-//     console.log("Received data : ", req.body);
-//     if (!req.body || Object.keys(req.body).length === 0) {
-//       return res.status(400).json({ error: "Request body is empty" });
-//     }
-//     const newBoss = await Boss.create(req.body);
-//     res.json(newBoss);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+app.post("/bpost", async (req, res, next) => {
+  try {
+    console.log("Received data : ", req.body);
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ error: "Request body is empty" });
+    }
+    const newBoss = await Boss.create(req.body);
+    res.json(newBoss);
+  } catch (err) {
+    next(err);
+  }
+});
 
 
-app.put("/:name", async (req, res, next) => {
+app.put("/cupdate/:name", async (req, res, next) => {
   try {
     const updatedCharacter = await Character.findOneAndUpdate(
       { name: req.params.name },
@@ -115,7 +127,27 @@ app.put("/:name", async (req, res, next) => {
   }
 });
 
-app.delete("/:name", async (req, res, next) => {
+
+app.put("/bupdate/:name", async (req, res, next) => {
+  try {
+    const updatedBoss = await Boss.findOneAndUpdate(
+      { name: req.params.name },
+      req.body,
+      { new: true }
+    );
+    if (!updatedBoss) {
+      return res
+        .status(404)
+        .send("No Boss found with that name to update");
+    }
+    res.json(updatedBoss);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+app.delete("/cdelete/:name", async (req, res, next) => {
   try {
     const deletedCharacter = await Character.findOneAndDelete({
       name: req.params.name,
@@ -126,6 +158,22 @@ app.delete("/:name", async (req, res, next) => {
         .send("No character found with that name to delete");
     }
     res.json(deletedCharacter);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.delete("/bdelete/:name", async (req, res, next) => {
+  try {
+    const deletedBoss = await Boss.findOneAndDelete({
+      name: req.params.name,
+    });
+    if (!deletedBoss) {
+      return res
+        .status(404)
+        .send("No boss found with that name to delete");
+    }
+    res.json(deletedBoss);
   } catch (err) {
     next(err);
   }
