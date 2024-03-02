@@ -56,7 +56,7 @@ app.get("/:name", async (req, res, next) => {
   }
 });
 
-app.get("/boss/", async (req, res, next) => {
+app.get("/boss", async (req, res, next) => {
   try {
     console.log("Request from IP:", req.ip);
     console.log("User-Agent:", req.headers["user-agent"]);
