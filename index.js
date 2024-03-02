@@ -32,7 +32,7 @@ app.use((req, res, next) => {
   }
 });
 
-app.get("/", async (req, res, next) => {
+app.get("/characters", async (req, res, next) => {
   try {
     console.log("Request from IP:", req.ip);
     console.log("User-Agent:", req.headers["user-agent"]);
@@ -56,7 +56,7 @@ app.get("/:name", async (req, res, next) => {
   }
 });
 
-app.get("/boss", async (req, res, next) => {
+app.get("/bosses", async (req, res, next) => {
   try {
     console.log("Request from IP:", req.ip);
     console.log("User-Agent:", req.headers["user-agent"]);
@@ -81,18 +81,18 @@ app.post("/", async (req, res, next) => {
   }
 });
 
-app.post("/boss/", async (req, res, next) => {
-  try {
-    console.log("Received data : ", req.body);
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ error: "Request body is empty" });
-    }
-    const newBoss = await Boss.create(req.body);
-    res.json(newBoss);
-  } catch (err) {
-    next(err);
-  }
-});
+// app.post("/boss/", async (req, res, next) => {
+//   try {
+//     console.log("Received data : ", req.body);
+//     if (!req.body || Object.keys(req.body).length === 0) {
+//       return res.status(400).json({ error: "Request body is empty" });
+//     }
+//     const newBoss = await Boss.create(req.body);
+//     res.json(newBoss);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 
 app.put("/:name", async (req, res, next) => {
