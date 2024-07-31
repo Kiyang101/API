@@ -4,10 +4,11 @@ const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const Character = require("./models/Character");
-const Boss = require("./models/Boss")
+const Boss = require("./models/Boss");
 
 const app = express();
 const port = process.env.PORT || 3000;
+
 app.use(cors());
 app.use(express.json());
 
@@ -44,7 +45,6 @@ app.get("/characters", async (req, res, next) => {
   }
 });
 
-
 app.get("/bosses", async (req, res, next) => {
   try {
     console.log("Request from IP:", req.ip);
@@ -56,7 +56,6 @@ app.get("/bosses", async (req, res, next) => {
     next(err);
   }
 });
-
 
 app.get("/cfind/:name", async (req, res, next) => {
   try {
@@ -108,7 +107,6 @@ app.post("/bpost", async (req, res, next) => {
   }
 });
 
-
 app.put("/cupdate/:name", async (req, res, next) => {
   try {
     const updatedCharacter = await Character.findOneAndUpdate(
@@ -127,7 +125,6 @@ app.put("/cupdate/:name", async (req, res, next) => {
   }
 });
 
-
 app.put("/bupdate/:name", async (req, res, next) => {
   try {
     const updatedBoss = await Boss.findOneAndUpdate(
@@ -136,16 +133,13 @@ app.put("/bupdate/:name", async (req, res, next) => {
       { new: true }
     );
     if (!updatedBoss) {
-      return res
-        .status(404)
-        .send("No Boss found with that name to update");
+      return res.status(404).send("No Boss found with that name to update");
     }
     res.json(updatedBoss);
   } catch (err) {
     next(err);
   }
 });
-
 
 app.delete("/cdelete/:name", async (req, res, next) => {
   try {
@@ -169,9 +163,7 @@ app.delete("/bdelete/:name", async (req, res, next) => {
       name: req.params.name,
     });
     if (!deletedBoss) {
-      return res
-        .status(404)
-        .send("No boss found with that name to delete");
+      return res.status(404).send("No boss found with that name to delete");
     }
     res.json(deletedBoss);
   } catch (err) {
